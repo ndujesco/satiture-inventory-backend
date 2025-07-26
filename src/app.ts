@@ -1,10 +1,10 @@
 import express, { Application } from 'express';
-import cors from 'express';
+import cors from 'cors';
 import batchRoutes from './routes';
 
 const app: Application = express();
 
-app.use('*', cors());
+app.use(cors());
 app.use(express.json());
 
 app.get('/', (req, res) => {

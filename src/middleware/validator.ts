@@ -1,7 +1,6 @@
 import { NextFunction, Request, Response } from 'express';
 import { body, validationResult } from 'express-validator';
 
-const batchIdErrorMessage = 'Batch ID already exists!';
 
 export class Helper {
   static enumValidator(field: string, allowedValues: string[]) {
@@ -31,7 +30,6 @@ export class Validator {
         .isLength({ min: 1 }),
 
       body('productionDate', 'Production date must be a valid date')
-        .isISO8601()
         .toDate(),
 
       body('rawMaterialCost')
@@ -82,7 +80,6 @@ export class Validator {
 
       body('productionDate', 'Production date must be a valid date')
         .optional()
-        .isISO8601()
         .toDate(),
 
       body('rawMaterialCost')
@@ -138,6 +135,8 @@ export class Validator {
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
+    console.log(errors);
+
       return res.status(422).json({
         status: 422,
         message: 'Validation failed',
@@ -148,6 +147,8 @@ export class Validator {
         }))
       });
     }
+
+    
     next();
   }
 }
